@@ -12,6 +12,10 @@ export default class Exercicio extends Model {
           },
         },
       },
+      video: {
+        type: Sequelize.STRING,
+        defaultValue: '',
+      },
     }, {
       sequelize,
     });

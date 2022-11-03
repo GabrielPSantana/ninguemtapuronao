@@ -5,6 +5,7 @@ class ExercicioController {
     try {
       const novoExercicio = await Exercicio.create({
         name: 'Peito 1',
+        video: 'jhhbvfibafknlfawmfw',
       });
       res.json(novoExercicio);
     } catch (e) {
