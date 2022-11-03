@@ -14,6 +14,10 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        video: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         created_at: {
           type: Sequelize.DATE,
           allowNull: false,
