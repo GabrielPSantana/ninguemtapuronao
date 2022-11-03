@@ -1,10 +1,11 @@
 import Sequelize, { Model } from 'sequelize';
 
-export default class User extends Model {
+export default class Feedback extends Model {
   static init(sequelize) {
     super.init({
       nivel_satisfacao: {
         type: Sequelize.INTEGER,
+        defaultValue: '',
         validate: {
           len: {
             args: [0, 5],

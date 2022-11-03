@@ -1,14 +1,14 @@
 import Sequelize, { Model } from 'sequelize';
 
-export default class User extends Model {
+export default class Exercicio extends Model {
   static init(sequelize) {
     super.init({
       name: {
         type: Sequelize.STRING,
+        defaultValue: '',
         validate: {
-          len: {
-            args: [3, 100],
-            msg: 'Campo nome deve ter entre 3 e 100 caracters',
+          notEmpty: {
+            msg: 'Campo nome deve ser informado',
           },
         },
       },
