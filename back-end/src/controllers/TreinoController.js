@@ -8,6 +8,11 @@ class TreinoController {
       });
       res.json(novoTreino);
     } catch (e) {
+      console.log();
+      console.log();
+      console.log();
+      console.log();
+      console.log('erro: ', e);
       res.json({
         errors: e.errors.map((err) => err.message),
       });

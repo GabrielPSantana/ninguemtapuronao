@@ -6,6 +6,7 @@ export default class User extends Model {
     super.init({
       name: {
         type: Sequelize.STRING,
+        defaultValue: '',
         validate: {
           len: {
             args: [3, 100],
