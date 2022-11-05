@@ -14,9 +14,29 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        video: {
+        filename: {
           type: Sequelize.STRING,
           allowNull: false,
+        },
+        treino_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'treinos',
+            key: 'id',
+          },
+          onDelete: 'SET NULL',
+          onUpdate: 'CASCADE',
+        },
+        catemusculars_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'catemusculars',
+            key: 'id',
+          },
+          onDelete: 'SET NULL',
+          onUpdate: 'CASCADE',
         },
         created_at: {
           type: Sequelize.DATE,

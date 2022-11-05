@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      'treinos',
+      'settreinos',
       {
         id: {
           type: Sequelize.INTEGER,
@@ -10,15 +10,19 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true,
         },
-        name: {
-          type: Sequelize.STRING,
+        repeticao: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
-        users_id: {
+        carga: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        exercicio_id: {
           type: Sequelize.INTEGER,
           allowNull: true,
           references: {
-            model: 'users',
+            model: 'exercicios',
             key: 'id',
           },
           onDelete: 'SET NULL',
@@ -37,6 +41,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('treinos');
+    await queryInterface.dropTable('settreinos');
   },
 };

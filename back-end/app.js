@@ -7,6 +7,7 @@ import feedbackRoutes from './src/routes/feedbackRoutes';
 import exercicioRoutes from './src/routes/exercicioRoutes';
 import catemuscularRoutes from './src/routes/catemuscularRoutes';
 import userRoutes from './src/routes/userRoutes';
+import fotoRoutes from './src/routes/fotoRoutes';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ class App {
     this.app.use('/feedback/', feedbackRoutes);
     this.app.use('/exercicio/', exercicioRoutes);
     this.app.use('/catemuscular/', catemuscularRoutes);
+    this.app.use('/foto/', fotoRoutes);
   }
 }
 

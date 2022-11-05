@@ -6,12 +6,6 @@ export default class Catemuscular extends Model {
       name: {
         type: Sequelize.STRING,
         defaultValue: '',
-        validate: {
-          len: {
-            args: [3, 100],
-            msg: 'Campo nome deve ter entre 3 e 100 caracters',
-          },
-        },
       },
     }, {
       sequelize,
