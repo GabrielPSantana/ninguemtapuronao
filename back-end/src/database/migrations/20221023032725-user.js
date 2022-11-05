@@ -27,9 +27,19 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        image: {
+        filename: {
           type: Sequelize.STRING,
           alolowNull: false,
+        },
+        users_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'users',
+            key: 'id',
+          },
+          onDelete: 'SET NULL',
+          onUpdate: 'CASCADE',
         },
         created_at: {
           type: Sequelize.DATE,
