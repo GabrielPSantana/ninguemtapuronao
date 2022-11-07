@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
+import appConfig from '../config/config';
 
 export default class User extends Model {
   static init(sequelize) {
@@ -29,6 +30,12 @@ export default class User extends Model {
       filename: {
         type: Sequelize.STRING,
         defaultValue: '',
+      },
+      url: {
+        type: Sequelize.VIRTUAL,
+        get() {
+          return `${appConfig.url}/images/${this.getDataValue('filename')}`;
+        },
       },
       type: {
         type: Sequelize.STRING,
