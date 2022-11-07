@@ -26,7 +26,7 @@ export default class User extends Model {
           },
         },
       },
-      image: {
+      filename: {
         type: Sequelize.STRING,
         defaultValue: '',
       },
@@ -56,5 +56,10 @@ export default class User extends Model {
       }
     });
     return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.User, { foreignKey: 'users_id' });
+    this.hasMany(models.Treino, { foreignKey: 'users_id' });
   }
 }

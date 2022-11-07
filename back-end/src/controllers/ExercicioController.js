@@ -1,4 +1,5 @@
 import Exercicio from '../models/Exercicio';
+import Settreino from '../models/Settreino';
 
 class ExercicioController {
   async store(req, res) {
@@ -6,6 +7,7 @@ class ExercicioController {
       const novoExercicio = await Exercicio.create(req.body);
       res.json(novoExercicio);
     } catch (e) {
+      console.log(e);
       res.json({
         errors: e.errors.map((err) => err.message),
       });
@@ -14,9 +16,19 @@ class ExercicioController {
 
   async index(req, res) {
     try {
-      const exercicios = await Exercicio.findAll();
+      const exercicios = await Exercicio.findAll({
+        attributes: ['id', 'name'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: Settreino,
+            attributes: ['id', 'repeticao', 'carga'],
+          },
+        ],
+      });
       return res.json(exercicios);
     } catch (e) {
+      console.log(e);
       return res.json('error');
     }
   }
@@ -24,7 +36,16 @@ class ExercicioController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const exercicio = await Exercicio.findByPk(id);
+      const exercicio = await Exercicio.findByPk(id, {
+        attributes: ['id', 'name'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: Settreino,
+            attributes: ['id', 'repeticao', 'carga'],
+          },
+        ],
+      });
       return res.json(exercicio);
     } catch (e) {
       return res.json('error');

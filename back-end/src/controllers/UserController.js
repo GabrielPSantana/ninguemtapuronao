@@ -1,11 +1,13 @@
 import User from '../models/User';
+import Treino from '../models/Treino';
 
 class UserController {
   async store(req, res) {
     try {
-      const novoUser = await User.create(req.body);
-      res.json(novoUser);
+      await User.create(req.body);
+      res.json({ msg: 'Usuário criado' });
     } catch (e) {
+      console.log(e);
       res.json({
         errors: e.errors.map((err) => err.message),
       });
@@ -14,9 +16,23 @@ class UserController {
 
   async index(req, res) {
     try {
-      const usuario = await User.findAll();
+      const usuario = await User.findAll({
+        attributes: ['id', 'name', 'email', 'filename', 'type'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'name', 'email', 'filename', 'type', 'users_id'],
+          },
+          {
+            model: Treino,
+            attributes: ['id', 'name'],
+          },
+        ],
+      });
       return res.json(usuario);
     } catch (e) {
+      console.log(e);
       return res.json('error');
     }
   }
@@ -24,8 +40,22 @@ class UserController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const usuarios = await User.findByPk(id);
-      return res.json(usuarios);
+      const usuario = await User.findByPk(id, {
+        attributes: ['id', 'name', 'email', 'filename', 'type'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'name', 'email', 'filename', 'type', 'users_id'],
+          },
+          {
+            model: Treino,
+            attributes: ['id', 'name'],
+          },
+        ],
+      });
+
+      return res.json(usuario);
     } catch (e) {
       return res.json('error');
     }
@@ -39,7 +69,14 @@ class UserController {
           errors: ['ID não enviado.'],
         });
       }
-      const usuario = await User.findByPk(id);
+      const usuario = await User.findByPk(id, {
+        attributes: ['id', 'name', 'email', 'filename', 'type'],
+        order: [['id', 'DESC']],
+        include: {
+          model: User,
+          attributes: ['id', 'name', 'email', 'filename', 'type', 'users_id'],
+        },
+      });
 
       if (!usuario) {
         return res.status(400).json({
@@ -47,9 +84,9 @@ class UserController {
         });
       }
 
-      const novosDados = await usuario.update(req.body);
+      await usuario.update(req.body);
 
-      return res.json(novosDados);
+      return res.json('Usuário atualizado');
     } catch (e) {
       return res.json('error');
     }
@@ -71,9 +108,9 @@ class UserController {
         });
       }
 
-      const usuarioDeletado = await usuario.destroy(req.body);
+      await usuario.destroy(req.body);
 
-      return res.json(usuarioDeletado);
+      return res.json({ msg: 'Usuário deletado' });
     } catch (e) {
       return res.json('error');
     }

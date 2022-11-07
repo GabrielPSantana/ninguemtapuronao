@@ -1,11 +1,14 @@
 import Treino from '../models/Treino';
+import Exercicio from '../models/Exercicio';
+import Feedback from '../models/Feedback';
 
 class TreinoController {
   async store(req, res) {
     try {
-      const novoTreino = await Treino.create(req.body);
-      res.json(novoTreino);
+      await Treino.create(req.body);
+      res.json({ msg: 'Treino criado com sucesso' });
     } catch (e) {
+      console.log(e);
       res.json({
         errors: e.errors.map((err) => err.message),
       });
@@ -14,9 +17,23 @@ class TreinoController {
 
   async index(req, res) {
     try {
-      const treinos = await Treino.findAll();
+      const treinos = await Treino.findAll({
+        attributes: ['id', 'name', 'users_id'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: Exercicio,
+            attributes: ['id', 'name', 'catemusculars_id'],
+          },
+          {
+            model: Feedback,
+            attributes: ['id', 'nivel_satisfacao', 'mensagem', 'atleta_id'],
+          },
+        ],
+      });
       return res.json(treinos);
     } catch (e) {
+      console.log(e);
       return res.json('error');
     }
   }
@@ -24,7 +41,20 @@ class TreinoController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const treino = await Treino.findByPk(id);
+      const treino = await Treino.findByPk(id, {
+        attributes: ['id', 'name', 'users_id'],
+        order: [['id', 'DESC']],
+        include: [
+          {
+            model: Exercicio,
+            attributes: ['id', 'name', 'catemusculars_id'],
+          },
+          {
+            model: Feedback,
+            attributes: ['id', 'nivel_satisfacao', 'mensagem', 'atleta_id'],
+          },
+        ],
+      });
       return res.json(treino);
     } catch (e) {
       return res.json('error');
