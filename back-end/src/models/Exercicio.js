@@ -12,7 +12,7 @@ export default class Exercicio extends Model {
           },
         },
       },
-      video: {
+      filename: {
         type: Sequelize.STRING,
         defaultValue: '',
       },
@@ -20,5 +20,9 @@ export default class Exercicio extends Model {
       sequelize,
     });
     return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.Settreino, { foreignKey: 'exercicio_id' });
   }
 }

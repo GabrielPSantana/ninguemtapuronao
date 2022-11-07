@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
+import appConfig from '../config/config';
 
 export default class User extends Model {
   static init(sequelize) {
@@ -26,9 +27,15 @@ export default class User extends Model {
           },
         },
       },
-      image: {
+      filename: {
         type: Sequelize.STRING,
         defaultValue: '',
+      },
+      url: {
+        type: Sequelize.VIRTUAL,
+        get() {
+          return `${appConfig.url}/images/${this.getDataValue('filename')}`;
+        },
       },
       type: {
         type: Sequelize.STRING,
@@ -56,5 +63,14 @@ export default class User extends Model {
       }
     });
     return this;
+  }
+
+  passwordIsValid(password) {
+    return bcryptjs.compare(password, this.password_hash);
+  }
+
+  static associate(models) {
+    this.hasMany(models.User, { foreignKey: 'users_id' });
+    this.hasMany(models.Treino, { foreignKey: 'users_id' });
   }
 }

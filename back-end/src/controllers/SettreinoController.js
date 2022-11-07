@@ -18,6 +18,7 @@ class SettreinoController {
       const settreinos = await Settreino.findAll();
       return res.json(settreinos);
     } catch (e) {
+      console.log(e);
       return res.json('error');
     }
   }

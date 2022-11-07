@@ -18,4 +18,9 @@ export default class Treino extends Model {
     });
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Exercicio, { foreignKey: 'treino_id' });
+    this.hasMany(models.Feedback, { foreignKey: 'treino_id' });
+  }
 }

@@ -18,7 +18,17 @@ module.exports = {
           type: Sequelize.TEXT,
           allowNull: true,
         },
-        users_id: {
+        treinador_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'users',
+            key: 'id',
+          },
+          onDelete: 'SET NULL',
+          onUpdate: 'CASCADE',
+        },
+        atleta_id: {
           type: Sequelize.INTEGER,
           allowNull: true,
           references: {

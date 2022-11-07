@@ -15,9 +15,13 @@ class FeedbackController {
 
   async index(req, res) {
     try {
-      const feedbacks = await Feedback.findAll();
+      const feedbacks = await Feedback.findAll({
+        attributes: ['id', 'nivel_satisfacao', 'mensagem', 'treino_id'],
+        order: [['id', 'DESC']],
+      });
       return res.json(feedbacks);
     } catch (e) {
+      console.log(e);
       return res.json('error');
     }
   }
@@ -25,7 +29,10 @@ class FeedbackController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const feedback = await Feedback.findByPk(id);
+      const feedback = await Feedback.findByPk(id, {
+        attributes: ['id', 'nivel_satisfacao', 'mensagem', 'treino_id'],
+        order: [['id', 'DESC']],
+      });
       return res.json(feedback);
     } catch (e) {
       return res.json('error');

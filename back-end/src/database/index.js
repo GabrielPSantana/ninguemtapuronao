@@ -12,3 +12,5 @@ const models = [User, Treino, Settreino, Feedback, Exercicio, Catemuscular];
 const connection = new Sequelize(databaseConfig);
 
 models.forEach((model) => model.init(connection));
+
+models.forEach((model) => model.associate && model.associate(connection.models));

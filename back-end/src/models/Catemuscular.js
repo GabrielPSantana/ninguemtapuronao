@@ -12,4 +12,8 @@ export default class Catemuscular extends Model {
     });
     return this;
   }
+
+  static associate(models) {
+    this.hasOne(models.Exercicio, { foreignKey: 'catemusculars_id' });
+  }
 }
