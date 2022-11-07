@@ -65,6 +65,10 @@ export default class User extends Model {
     return this;
   }
 
+  passwordIsValid(password) {
+    return bcryptjs.compare(password, this.password_hash);
+  }
+
   static associate(models) {
     this.hasMany(models.User, { foreignKey: 'users_id' });
     this.hasMany(models.Treino, { foreignKey: 'users_id' });
